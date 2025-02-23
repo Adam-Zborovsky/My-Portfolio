@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		if (direction === "right") {
 			track.style.animation = `scrollRight ${
-				track.scrollWidth / (pixelsPerSecond + 15)
+				track.scrollWidth / (pixelsPerSecond + 25)
 			}s linear infinite`;
 			track.style.transform = "translateX(-50%)";
 		} else {
