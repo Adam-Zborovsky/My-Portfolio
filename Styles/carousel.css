@@ -1,0 +1,48 @@
+.tech-carousel-container {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.tech-track {
+	display: flex;
+	gap: 1.2rem;
+	white-space: nowrap;
+	overflow: hidden;
+	width: max-content;
+}
+
+.tech-content {
+	display: flex;
+	gap: 1.2rem;
+	margin-bottom: 0.8rem;
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.tech-badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	background: rgba(30, 30, 30, 0.8);
+	padding: 0.5rem 1rem;
+	border-radius: 6px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	flex-shrink: 0;
+}
+
+.tech-badge img {
+	height: 24px;
+	width: auto;
+}
+
+.tech-badge span {
+	color: #a9a9a9;
+	font-size: 14px;
+	white-space: nowrap;
+}
+
+.tech-track:hover {
+	cursor: pointer;
+	animation-play-state: paused;
+}

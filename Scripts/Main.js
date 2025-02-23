@@ -1,13 +1,11 @@
-
 // Get the canvas element
 const Canvas = document.getElementById("Canvas3D");
 
 // Initialize the WebGL2 context
 const WebGL = Canvas.getContext("webgl2");
 
-if (!WebGL)
-{
-    alert("WebGL2 is not available.");
+if (!WebGL) {
+	alert("WebGL2 is not available.");
 }
 
 // Vertex shader source code
@@ -253,56 +251,84 @@ WebGL.attachShader(ShaderProgram, VertexShader);
 WebGL.attachShader(ShaderProgram, FragmentShader);
 WebGL.linkProgram(ShaderProgram);
 
-if (!WebGL.getProgramParameter(ShaderProgram, WebGL.LINK_STATUS))
-{
-    alert("Unable to initialize the shader program: " + WebGL.getProgramInfoLog(ShaderProgram));
+if (!WebGL.getProgramParameter(ShaderProgram, WebGL.LINK_STATUS)) {
+	alert(
+		"Unable to initialize the shader program: " +
+			WebGL.getProgramInfoLog(ShaderProgram)
+	);
 }
 
 // Collect shader attributes and uniform locations
 const ProgramInfo = {
-    AttribLocations:
-    {
-        VertexPosition: WebGL.getAttribLocation(ShaderProgram, "VertexPosition"),
-        TextureCoord: WebGL.getAttribLocation(ShaderProgram, "InTextureCoord"),
-        NormalVector: WebGL.getAttribLocation(ShaderProgram, "InNormalVector"),
-        SurfaceColor: WebGL.getAttribLocation(ShaderProgram, "InSurfaceColor"),
-    },
+	AttribLocations: {
+		VertexPosition: WebGL.getAttribLocation(ShaderProgram, "VertexPosition"),
+		TextureCoord: WebGL.getAttribLocation(ShaderProgram, "InTextureCoord"),
+		NormalVector: WebGL.getAttribLocation(ShaderProgram, "InNormalVector"),
+		SurfaceColor: WebGL.getAttribLocation(ShaderProgram, "InSurfaceColor"),
+	},
 
-    UniformLocations: 
-    {
-        VertexTransformationMatrix: WebGL.getUniformLocation(ShaderProgram, "VertexTransformationMatrix"),
-        NormalTransformationMatrix: WebGL.getUniformLocation(ShaderProgram, "NormalTransformationMatrix"),
-        LightSpaceMatrix: WebGL.getUniformLocation(ShaderProgram, "LightSpaceMatrix"),
-        ModelMatrix: WebGL.getUniformLocation(ShaderProgram, "ModelMatrix"),
-        ShadowMap: WebGL.getUniformLocation(ShaderProgram, "ShadowMap"),
-        TextTexture: WebGL.getUniformLocation(ShaderProgram, "TextTexture"),
-        Time: WebGL.getUniformLocation(ShaderProgram, "Time"),
-    },
+	UniformLocations: {
+		VertexTransformationMatrix: WebGL.getUniformLocation(
+			ShaderProgram,
+			"VertexTransformationMatrix"
+		),
+		NormalTransformationMatrix: WebGL.getUniformLocation(
+			ShaderProgram,
+			"NormalTransformationMatrix"
+		),
+		LightSpaceMatrix: WebGL.getUniformLocation(
+			ShaderProgram,
+			"LightSpaceMatrix"
+		),
+		ModelMatrix: WebGL.getUniformLocation(ShaderProgram, "ModelMatrix"),
+		ShadowMap: WebGL.getUniformLocation(ShaderProgram, "ShadowMap"),
+		TextTexture: WebGL.getUniformLocation(ShaderProgram, "TextTexture"),
+		Time: WebGL.getUniformLocation(ShaderProgram, "Time"),
+	},
 };
 
 // Vertex positions for the object
-const [Positions, TextureCoords, Normals, Colors] = LoadObject(ObjectFile, MaterialFile);
+const [Positions, TextureCoords, Normals, Colors] = LoadObject(
+	ObjectFile,
+	MaterialFile
+);
 const TriangleCount = Positions.length / 3;
 
 // Create a buffer for the triangles positions
 const PositionBuffer = WebGL.createBuffer();
 WebGL.bindBuffer(WebGL.ARRAY_BUFFER, PositionBuffer);
-WebGL.bufferData(WebGL.ARRAY_BUFFER, new Float32Array(Positions), WebGL.STATIC_DRAW);
+WebGL.bufferData(
+	WebGL.ARRAY_BUFFER,
+	new Float32Array(Positions),
+	WebGL.STATIC_DRAW
+);
 
 // Create a buffer for the texture coords
 const TextureCoordBuffer = WebGL.createBuffer();
 WebGL.bindBuffer(WebGL.ARRAY_BUFFER, TextureCoordBuffer);
-WebGL.bufferData(WebGL.ARRAY_BUFFER, new Float32Array(TextureCoords), WebGL.STATIC_DRAW);
+WebGL.bufferData(
+	WebGL.ARRAY_BUFFER,
+	new Float32Array(TextureCoords),
+	WebGL.STATIC_DRAW
+);
 
 // Create a buffer for the normal vectors
 const NormalVectorBuffer = WebGL.createBuffer();
 WebGL.bindBuffer(WebGL.ARRAY_BUFFER, NormalVectorBuffer);
-WebGL.bufferData(WebGL.ARRAY_BUFFER, new Float32Array(Normals), WebGL.STATIC_DRAW);
+WebGL.bufferData(
+	WebGL.ARRAY_BUFFER,
+	new Float32Array(Normals),
+	WebGL.STATIC_DRAW
+);
 
 // Create a buffer for the material color
 const ColorBuffer = WebGL.createBuffer();
 WebGL.bindBuffer(WebGL.ARRAY_BUFFER, ColorBuffer);
-WebGL.bufferData(WebGL.ARRAY_BUFFER, new Float32Array(Colors), WebGL.STATIC_DRAW);
+WebGL.bufferData(
+	WebGL.ARRAY_BUFFER,
+	new Float32Array(Colors),
+	WebGL.STATIC_DRAW
+);
 
 // Enable depth testing and face culling
 WebGL.enable(WebGL.DEPTH_TEST);
@@ -316,10 +342,13 @@ ModelMatrix = MatrixFunctions.RotateY(ModelMatrix, -1.571);
 ModelMatrix = MatrixFunctions.Scale(ModelMatrix, 0.5, 0.5, 0.5);
 
 // Light space matrix for dirctional light
-const LightSpaceMatrix = MatrixFunctions.Multiply(MatrixFunctions.LookAt([0, -5, -1], [0, 0, 0], [0, 1, 0]), ModelMatrix);
+const LightSpaceMatrix = MatrixFunctions.Multiply(
+	MatrixFunctions.LookAt([0, -5, -1], [0, 0, 0], [0, 1, 0]),
+	ModelMatrix
+);
 
 // Create shadow map
-const ShadowMap = GenerateShadowMap(2048, 2048, LightSpaceMatrix)
+const ShadowMap = GenerateShadowMap(2048, 2048, LightSpaceMatrix);
 
 // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
@@ -342,25 +371,35 @@ TextCanvas.width = TextCanvas.height = 1024;
 // Create texture
 const TextTexture = WebGL.createTexture();
 
-function UpdateTextTexture(NewText)
-{
-    // Render text on the canvas
-    Context.clearRect(0, 0, TextCanvas.width, TextCanvas.height);
-    Context.font = "32px monospace";//"32px VT323, monospace";
-    Context.fillStyle = "rgb(255, 150, 50)"; // Orange
-    //Context.fillStyle = "rgb(125, 255, 50)"; // Green
-    
-    const Lines = NewText.split("\n");
-    Lines.forEach((Line, i) => {
-        Context.fillText(Line, 32, 64 + i * 32);
-    });
+function UpdateTextTexture(NewText) {
+	// Render text on the canvas
+	Context.clearRect(0, 0, TextCanvas.width, TextCanvas.height);
+	Context.font = "32px monospace"; //"32px VT323, monospace";
+	Context.fillStyle = "rgb(255, 150, 50)"; // Orange
+	//Context.fillStyle = "rgb(125, 255, 50)"; // Green
 
-    // Update texture from canvas
-    WebGL.bindTexture(WebGL.TEXTURE_2D, TextTexture);
-    WebGL.texImage2D(WebGL.TEXTURE_2D, 0, WebGL.RGBA, WebGL.RGBA, WebGL.UNSIGNED_BYTE, TextCanvas);
-    WebGL.texParameteri(WebGL.TEXTURE_2D, WebGL.TEXTURE_MIN_FILTER, WebGL.LINEAR_MIPMAP_LINEAR);
-    WebGL.texParameteri(WebGL.TEXTURE_2D, WebGL.TEXTURE_MAG_FILTER, WebGL.LINEAR);
-    WebGL.generateMipmap(WebGL.TEXTURE_2D);
+	const Lines = NewText.split("\n");
+	Lines.forEach((Line, i) => {
+		Context.fillText(Line, 32, 64 + i * 32);
+	});
+
+	// Update texture from canvas
+	WebGL.bindTexture(WebGL.TEXTURE_2D, TextTexture);
+	WebGL.texImage2D(
+		WebGL.TEXTURE_2D,
+		0,
+		WebGL.RGBA,
+		WebGL.RGBA,
+		WebGL.UNSIGNED_BYTE,
+		TextCanvas
+	);
+	WebGL.texParameteri(
+		WebGL.TEXTURE_2D,
+		WebGL.TEXTURE_MIN_FILTER,
+		WebGL.LINEAR_MIPMAP_LINEAR
+	);
+	WebGL.texParameteri(WebGL.TEXTURE_2D, WebGL.TEXTURE_MAG_FILTER, WebGL.LINEAR);
+	WebGL.generateMipmap(WebGL.TEXTURE_2D);
 }
 
 // 30 lines max each line 55 chars long max
@@ -372,31 +411,29 @@ let MousePosition = [0, 0];
 
 // Event listener for mouse movements
 Canvas.addEventListener("mousemove", (event) => {
-    MousePosition = [event.clientX, event.clientY];
-    event.preventDefault();
+	MousePosition = [event.clientX, event.clientY];
+	event.preventDefault();
 });
 
 let MouseDown = false;
 
 // Check if left mouse button down
 Canvas.addEventListener("mousedown", (event) => {
-    if(event.button === 0)
-    {
-        MouseDown = true;
-        MouseOffset = MousePosition;
-    }
+	if (event.button === 0) {
+		MouseDown = true;
+		MouseOffset = MousePosition;
+	}
 
-    event.preventDefault();
+	event.preventDefault();
 });
 
 // Check if left mouse button up
 Canvas.addEventListener("mouseup", (event) => {
-    if(event.button === 0)
-    {
-        MouseDown = false;
-    }
+	if (event.button === 0) {
+		MouseDown = false;
+	}
 
-    event.preventDefault();
+	event.preventDefault();
 });
 
 // Prevent right click context menu appearing
@@ -413,21 +450,20 @@ let CurrentlyPressedKey = null;
 
 // Event listener for keydown
 Canvas.addEventListener("keydown", (event) => {
-    if (!["Enter", CurrentlyPressedKey].includes(event.key))
-    {
-        KeyboardPressed.play();
-        KeyboardPressed.currentTime = 0;
-    }
+	if (!["Enter", CurrentlyPressedKey].includes(event.key)) {
+		KeyboardPressed.play();
+		KeyboardPressed.currentTime = 0;
+	}
 
-    CurrentlyPressedKey = event.key;
-    KeyPressed(event.key);
-    event.preventDefault();
+	CurrentlyPressedKey = event.key;
+	KeyPressed(event.key);
+	event.preventDefault();
 });
 
 // Event listener for keyup
 Canvas.addEventListener("keyup", (event) => {
-    CurrentlyPressedKey = null;
-    event.preventDefault();
+	CurrentlyPressedKey = null;
+	event.preventDefault();
 });
 
 // Audio stuff // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
@@ -450,151 +486,209 @@ let Time = 0;
 let LastTime = 0;
 
 // Draw the scene
-function UpdateScene(CurrentTime)
-{
-    // Check if this is first render
-    if (Time == 0)
-    {
-        // Play boot and ambient sounds
-        ComputerBoot.play();
-        ComputerAmbient.play();
+function UpdateScene(CurrentTime) {
+	// Check if this is first render
+	if (Time == 0) {
+		// Play boot and ambient sounds
+		ComputerBoot.play();
+		ComputerAmbient.play();
 
-        // Make ambient sound repeat
-        ComputerAmbient.loop = true;
+		// Make ambient sound repeat
+		ComputerAmbient.loop = true;
 
-        // Reset time
-        LastTime = CurrentTime * 0.001 - 0.01;
-    }
+		// Reset time
+		LastTime = CurrentTime * 0.001 - 0.01;
+	}
 
-    // Time keeping // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+	// Time keeping // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    CurrentTime *= 0.001; // Convert time to seconds
-    const DeltaTime = CurrentTime - LastTime; // Get time since last update
-    LastTime = CurrentTime; // Update last time variable
-    Time += DeltaTime; // Time accumulator for fixed time step
+	CurrentTime *= 0.001; // Convert time to seconds
+	const DeltaTime = CurrentTime - LastTime; // Get time since last update
+	LastTime = CurrentTime; // Update last time variable
+	Time += DeltaTime; // Time accumulator for fixed time step
 
-    // Update the rotation of the camera // // // // // // // // // // // // // // // // // // // // // // // // // //
+	// Update the rotation of the camera // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    // Update the text on the screen
-    UpdateTextTexture(GetText());
+	// Update the text on the screen
+	UpdateTextTexture(GetText());
 
-    // Resize the canvas if necessary
-    ResizeCanvasToDisplaySize(WebGL.canvas)
+	// Resize the canvas if necessary
+	ResizeCanvasToDisplaySize(WebGL.canvas);
 
-    if (MouseDown)
-    {
-        // Update rotation over time
-        Rotation[0] += 0.1 * ((MousePosition[1] - MouseOffset[1]) / (WebGL.canvas.clientHeight * 2) - Rotation[0]);
-        Rotation[1] += 0.1 * ((MousePosition[0] - MouseOffset[0]) / (WebGL.canvas.clientWidth * 2) - Rotation[1]);
-    }
+	if (MouseDown) {
+		// Update rotation over time
+		Rotation[0] +=
+			0.1 *
+			((MousePosition[1] - MouseOffset[1]) / (WebGL.canvas.clientHeight * 2) -
+				Rotation[0]);
+		Rotation[1] +=
+			0.1 *
+			((MousePosition[0] - MouseOffset[0]) / (WebGL.canvas.clientWidth * 2) -
+				Rotation[1]);
+	} else {
+		// Decay rotation over time
+		Rotation[0] *= 0.95;
+		Rotation[1] *= 0.95;
+	}
 
-    else
-    {
-        // Decay rotation over time
-        Rotation[0] *= 0.95;
-        Rotation[1] *= 0.95;
-    }
+	// General matricies // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    // General matricies // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+	// Compute matrix for camera
+	let CameraMatrix = MatrixFunctions.Base();
+	CameraMatrix = MatrixFunctions.RotateX(CameraMatrix, -Rotation[0]);
+	CameraMatrix = MatrixFunctions.RotateY(CameraMatrix, -Rotation[1]);
 
-    // Compute matrix for camera
-    let CameraMatrix = MatrixFunctions.Base();
-    CameraMatrix = MatrixFunctions.RotateX(CameraMatrix, -Rotation[0]);
-    CameraMatrix = MatrixFunctions.RotateY(CameraMatrix, -Rotation[1]);
+	// Compute the projection and view matricies
+	let ProjectionMatrix = MatrixFunctions.Perspective(
+		0.5,
+		WebGL.canvas.clientWidth / WebGL.canvas.clientHeight,
+		1,
+		20000
+	);
+	let ViewMatrix = MatrixFunctions.Inverse(CameraMatrix);
 
-    // Compute the projection and view matricies
-    let ProjectionMatrix = MatrixFunctions.Perspective(0.5, WebGL.canvas.clientWidth / WebGL.canvas.clientHeight, 1, 20000);
-    let ViewMatrix = MatrixFunctions.Inverse(CameraMatrix);
+	// Compute view matrix for all objects by combining camera and perspective matricies
+	let ViewProjectionMatrix = MatrixFunctions.Multiply(
+		ProjectionMatrix,
+		ViewMatrix
+	);
 
-    // Compute view matrix for all objects by combining camera and perspective matricies
-    let ViewProjectionMatrix = MatrixFunctions.Multiply(ProjectionMatrix, ViewMatrix);
+	// Object specific matricies // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    // Object specific matricies // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+	// Compute the world transformations for this object
+	let ModelMatrix = MatrixFunctions.Base();
+	ModelMatrix = MatrixFunctions.Translate(ModelMatrix, 0, 0, -1.25);
+	ModelMatrix = MatrixFunctions.RotateY(ModelMatrix, -1.571);
+	ModelMatrix = MatrixFunctions.Scale(ModelMatrix, 0.5, 0.5, 0.5);
 
-    // Compute the world transformations for this object
-    let ModelMatrix = MatrixFunctions.Base();
-    ModelMatrix = MatrixFunctions.Translate(ModelMatrix, 0, 0, -1.25);
-    ModelMatrix = MatrixFunctions.RotateY(ModelMatrix, -1.571);
-    ModelMatrix = MatrixFunctions.Scale(ModelMatrix, 0.5, 0.5, 0.5);
+	// Compute full transformation matrix for this object
+	let ModelViewProjectionMatrix = MatrixFunctions.Multiply(
+		ViewProjectionMatrix,
+		ModelMatrix
+	);
 
-    // Compute full transformation matrix for this object
-    let ModelViewProjectionMatrix = MatrixFunctions.Multiply(ViewProjectionMatrix, ModelMatrix);
+	// Calculate normal matrix for this object
+	let NormalMatrix = MatrixFunctions.Base();
+	NormalMatrix = MatrixFunctions.RotateY(NormalMatrix, -1.571);
 
-    // Calculate normal matrix for this object
-    let NormalMatrix = MatrixFunctions.Base();
-    NormalMatrix = MatrixFunctions.RotateY(NormalMatrix, -1.571);
+	// Rendering // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-    // Rendering // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
+	// Clear the canvas
+	WebGL.clearColor(0.1, 0.1, 0.1, 1.0);
+	WebGL.clear(WebGL.COLOR_BUFFER_BIT | WebGL.DEPTH_BUFFER_BIT);
 
-    // Clear the canvas
-    WebGL.clearColor(0.1, 0.1, 0.1, 1.0);
-    WebGL.clear(WebGL.COLOR_BUFFER_BIT | WebGL.DEPTH_BUFFER_BIT);
+	// Pass in all uniforms
+	WebGL.uniformMatrix4fv(
+		ProgramInfo.UniformLocations.VertexTransformationMatrix,
+		false,
+		ModelViewProjectionMatrix
+	);
+	WebGL.uniformMatrix4fv(
+		ProgramInfo.UniformLocations.NormalTransformationMatrix,
+		false,
+		NormalMatrix
+	);
+	WebGL.uniformMatrix4fv(
+		ProgramInfo.UniformLocations.LightSpaceMatrix,
+		false,
+		LightSpaceMatrix
+	);
+	WebGL.uniformMatrix4fv(
+		ProgramInfo.UniformLocations.ModelMatrix,
+		false,
+		ModelMatrix
+	);
+	WebGL.uniform1f(ProgramInfo.UniformLocations.Time, Time);
 
-    // Pass in all uniforms
-    WebGL.uniformMatrix4fv(ProgramInfo.UniformLocations.VertexTransformationMatrix, false, ModelViewProjectionMatrix);
-    WebGL.uniformMatrix4fv(ProgramInfo.UniformLocations.NormalTransformationMatrix, false, NormalMatrix);
-    WebGL.uniformMatrix4fv(ProgramInfo.UniformLocations.LightSpaceMatrix, false, LightSpaceMatrix);
-    WebGL.uniformMatrix4fv(ProgramInfo.UniformLocations.ModelMatrix, false, ModelMatrix);
-    WebGL.uniform1f(ProgramInfo.UniformLocations.Time, Time);
+	// Bind position buffer
+	WebGL.bindBuffer(WebGL.ARRAY_BUFFER, PositionBuffer);
+	WebGL.vertexAttribPointer(
+		ProgramInfo.AttribLocations.VertexPosition,
+		3,
+		WebGL.FLOAT,
+		false,
+		0,
+		0
+	);
+	WebGL.enableVertexAttribArray(ProgramInfo.AttribLocations.VertexPosition);
 
-    // Bind position buffer
-    WebGL.bindBuffer(WebGL.ARRAY_BUFFER, PositionBuffer);
-    WebGL.vertexAttribPointer(ProgramInfo.AttribLocations.VertexPosition, 3, WebGL.FLOAT, false, 0, 0);
-    WebGL.enableVertexAttribArray(ProgramInfo.AttribLocations.VertexPosition);
+	// Bind texture coord buffer
+	WebGL.bindBuffer(WebGL.ARRAY_BUFFER, TextureCoordBuffer);
+	WebGL.vertexAttribPointer(
+		ProgramInfo.AttribLocations.TextureCoord,
+		2,
+		WebGL.FLOAT,
+		false,
+		0,
+		0
+	);
+	WebGL.enableVertexAttribArray(ProgramInfo.AttribLocations.TextureCoord);
 
-    // Bind texture coord buffer
-    WebGL.bindBuffer(WebGL.ARRAY_BUFFER, TextureCoordBuffer);
-    WebGL.vertexAttribPointer(ProgramInfo.AttribLocations.TextureCoord, 2, WebGL.FLOAT, false, 0, 0);
-    WebGL.enableVertexAttribArray(ProgramInfo.AttribLocations.TextureCoord);
+	// Bind normal buffer
+	WebGL.bindBuffer(WebGL.ARRAY_BUFFER, NormalVectorBuffer);
+	WebGL.vertexAttribPointer(
+		ProgramInfo.AttribLocations.NormalVector,
+		3,
+		WebGL.FLOAT,
+		false,
+		0,
+		0
+	);
+	WebGL.enableVertexAttribArray(ProgramInfo.AttribLocations.NormalVector);
 
-    // Bind normal buffer
-    WebGL.bindBuffer(WebGL.ARRAY_BUFFER, NormalVectorBuffer);
-    WebGL.vertexAttribPointer(ProgramInfo.AttribLocations.NormalVector, 3, WebGL.FLOAT, false, 0, 0);
-    WebGL.enableVertexAttribArray(ProgramInfo.AttribLocations.NormalVector);
+	// Bind color buffer
+	WebGL.bindBuffer(WebGL.ARRAY_BUFFER, ColorBuffer);
+	WebGL.vertexAttribPointer(
+		ProgramInfo.AttribLocations.SurfaceColor,
+		3,
+		WebGL.FLOAT,
+		false,
+		0,
+		0
+	);
+	WebGL.enableVertexAttribArray(ProgramInfo.AttribLocations.SurfaceColor);
 
-    // Bind color buffer
-    WebGL.bindBuffer(WebGL.ARRAY_BUFFER, ColorBuffer);
-    WebGL.vertexAttribPointer(ProgramInfo.AttribLocations.SurfaceColor, 3, WebGL.FLOAT, false, 0, 0);
-    WebGL.enableVertexAttribArray(ProgramInfo.AttribLocations.SurfaceColor);
+	// Bind shadow map texture
+	WebGL.activeTexture(WebGL.TEXTURE0);
+	WebGL.bindTexture(WebGL.TEXTURE_2D, ShadowMap);
+	WebGL.uniform1i(ProgramInfo.UniformLocations.ShadowMap, 0);
 
-    // Bind shadow map texture
-    WebGL.activeTexture(WebGL.TEXTURE0);
-    WebGL.bindTexture(WebGL.TEXTURE_2D, ShadowMap);
-    WebGL.uniform1i(ProgramInfo.UniformLocations.ShadowMap, 0);
+	// Bind text texture
+	WebGL.activeTexture(WebGL.TEXTURE1);
+	WebGL.bindTexture(WebGL.TEXTURE_2D, TextTexture);
+	WebGL.uniform1i(ProgramInfo.UniformLocations.TextTexture, 1);
 
-    // Bind text texture
-    WebGL.activeTexture(WebGL.TEXTURE1);
-    WebGL.bindTexture(WebGL.TEXTURE_2D, TextTexture);
-    WebGL.uniform1i(ProgramInfo.UniformLocations.TextTexture, 1);
+	// Draw the triangles
+	WebGL.drawArrays(WebGL.TRIANGLES, 0, TriangleCount);
 
-    // Draw the triangles
-    WebGL.drawArrays(WebGL.TRIANGLES, 0, TriangleCount);
-
-    // Schedule the next frame
-    if (State === "Retro") {requestAnimationFrame(UpdateScene);}
+	// Schedule the next frame
+	if (State === "Retro") {
+		requestAnimationFrame(UpdateScene);
+	}
 }
 
 // None 3d rendering stuff // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-function FadeAudio()
-{
-    // Fade audio out
-    if (State === "Modern")
-    {
-        ComputerBoot.volume = Math.max(0, ComputerBoot.volume - (0.5 / 30));
-        ComputerAmbient.volume = Math.max(0, ComputerAmbient.volume - (0.25 / 30));
+function FadeAudio() {
+	// Fade audio out
+	if (State === "Modern") {
+		ComputerBoot.volume = Math.max(0, ComputerBoot.volume - 0.5 / 30);
+		ComputerAmbient.volume = Math.max(0, ComputerAmbient.volume - 0.25 / 30);
 
-        if (ComputerBoot.volume > 0) {requestAnimationFrame(FadeAudio);}
-    }
+		if (ComputerBoot.volume > 0) {
+			requestAnimationFrame(FadeAudio);
+		}
+	}
 
-    // Fade audio in
-    else
-    {
-        ComputerBoot.volume = Math.min(0.5, ComputerBoot.volume + (0.5 / 30));
-        ComputerAmbient.volume = Math.min(0.25, ComputerAmbient.volume + (0.25 / 30));
+	// Fade audio in
+	else {
+		ComputerBoot.volume = Math.min(0.5, ComputerBoot.volume + 0.5 / 30);
+		ComputerAmbient.volume = Math.min(0.25, ComputerAmbient.volume + 0.25 / 30);
 
-        if (ComputerBoot.volume < 0.5) {requestAnimationFrame(FadeAudio);}
-    }
+		if (ComputerBoot.volume < 0.5) {
+			requestAnimationFrame(FadeAudio);
+		}
+	}
 }
 
 let State = "Modern";
@@ -602,63 +696,63 @@ let State = "Modern";
 const MainButton = document.getElementById("MainButton");
 const MainDiv = document.getElementById("MainDiv");
 
-MainButton.onclick = function() {ChangeState();};
+MainButton.onclick = function () {
+	ChangeState();
+};
 
-function ChangeState()
-{
-    // Rotate arrow inside the main button
-    let Rotation = parseInt((MainButton.style.transform || "0").match(/\d+/)) + 180;
-    MainButton.style.transform = `rotateZ(${Rotation}deg)`;
+function ChangeState() {
+	MainButton.textContent = "  Boring Portfolio";
 
-    if (State === "Modern")
-    {
-        State = "Retro";
-        MainDiv.classList.add("hidden");
+	if (State === "Modern") {
+		State = "Retro";
+		MainDiv.classList.add("hidden");
 
-        Canvas.focus();
-        requestAnimationFrame(UpdateScene);
-    }
+		Canvas.focus();
+		requestAnimationFrame(UpdateScene);
+	} else {
+		State = "Modern";
+		MainButton.textContent = "Interactive Portfolio";
+		MainDiv.classList.remove("hidden");
+	}
 
-    else
-    {
-        State = "Modern";
-        MainDiv.classList.remove("hidden");
-    }
-
-    requestAnimationFrame(FadeAudio);
+	requestAnimationFrame(FadeAudio);
 }
 
 const MouseGlow = document.getElementById("MouseGlow");
 
 // Make mouse glow follow mouse
 window.addEventListener("mousemove", (event) => {
-    MouseGlow.animate({left: `${event.clientX}px`, top: `${event.clientY}px`}, {duration: 3500, fill: "forwards"});
+	MouseGlow.animate(
+		{ left: `${event.clientX}px`, top: `${event.clientY}px` },
+		{ duration: 3500, fill: "forwards" }
+	);
 });
 
 // Scrollspy logic // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // // //
 
-const RightPanel = document.getElementById("RightPanel")
+const RightPanel = document.getElementById("RightPanel");
 const NavItems = document.querySelectorAll(".NavItem");
 const Sections = document.querySelectorAll(".Section");
 
 // Function to detect which section user is scrolled to currently
-function SetActiveSection()
-{
-    let Index = Sections.length;
-    while(--Index && RightPanel.scrollTop + 150 < Sections[Index].offsetTop) {}
-    NavItems.forEach((item) => item.classList.remove('Active'));
-    NavItems[Index].classList.add('Active');
+function SetActiveSection() {
+	let Index = Sections.length;
+	while (--Index && RightPanel.scrollTop + 150 < Sections[Index].offsetTop) {}
+	NavItems.forEach((item) => item.classList.remove("Active"));
+	NavItems[Index].classList.add("Active");
 }
 
 // Function to scroll to selected section when scroll spy clicked
-function ScrollToSection(event)
-{
-    const SectionId = event.currentTarget.getAttribute('DataSection');
-    const TargetSection = document.getElementById(SectionId);
-    RightPanel.scrollTo({top: TargetSection.offsetTop - window.innerHeight * 0.1, behavior: "smooth"});
+function ScrollToSection(event) {
+	const SectionId = event.currentTarget.getAttribute("DataSection");
+	const TargetSection = document.getElementById(SectionId);
+	RightPanel.scrollTo({
+		top: TargetSection.offsetTop - window.innerHeight * 0.1,
+		behavior: "smooth",
+	});
 }
 
-NavItems.forEach(item => item.addEventListener("click", ScrollToSection));
+NavItems.forEach((item) => item.addEventListener("click", ScrollToSection));
 RightPanel.addEventListener("scroll", SetActiveSection);
 SetActiveSection();
 
@@ -668,37 +762,36 @@ const Projects = document.querySelectorAll(".Project");
 const Letters = "abcdefghijklmnopqrstuvwxtz0123456789";
 
 // For every project item
-Projects.forEach(Project => {
+Projects.forEach((Project) => {
+	// When mouse enters item
+	Project.addEventListener("mouseenter", (event) => {
+		// For every text object in item
+		event.target.querySelectorAll("p").forEach((Text) => {
+			let Iteration = 0;
 
-    // When mouse enters item
-    Project.addEventListener('mouseenter', event => {
+			let Interval = setInterval(() => {
+				// Split text into its letters
+				Text.innerText = Text.innerText
+					.split("")
 
-        // For every text object in item
-        event.target.querySelectorAll("p").forEach(Text => {
-    
-            let Iteration = 0;
-            
-            let Interval = setInterval(() => {
-                
-                // Split text into its letters
-                Text.innerText = Text.innerText.split("")
-                
-                // Assign each letter a new value
-                .map((letter, index) => {
-                
-                    // Return original letter
-                    if(index < Iteration || Text.dataset.value[index] == " ") { return Text.dataset.value[index]; }
+					// Assign each letter a new value
+					.map((letter, index) => {
+						// Return original letter
+						if (index < Iteration || Text.dataset.value[index] == " ") {
+							return Text.dataset.value[index];
+						}
 
-                    // Return random letter
-                    return Letters[Math.floor(Math.random() * 36)]
-                
-                }).join(""); // Join the word back togeather from the letters
-                
-                if(Iteration >= Text.dataset.value.length){ clearInterval(Interval); }
-                
-                Iteration += 1;
-                
-            }, 30);
-        });
-    });
+						// Return random letter
+						return Letters[Math.floor(Math.random() * 36)];
+					})
+					.join(""); // Join the word back togeather from the letters
+
+				if (Iteration >= Text.dataset.value.length) {
+					clearInterval(Interval);
+				}
+
+				Iteration += 1;
+			}, 30);
+		});
+	});
 });
