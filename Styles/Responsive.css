@@ -1,0 +1,122 @@
+@media screen and (max-width: 768px) {
+	/*———————————————————————————*/
+	/* MAIN WRAPPER RESET         */
+	/*———————————————————————————*/
+	#MainDiv {
+		position: static !important;
+		display: flex !important;
+		flex-direction: column !important;
+		width: 100% !important;
+		height: auto !important;
+		overflow: visible !important;
+		transform: none !important;
+		transition: none !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		box-sizing: border-box !important;
+	}
+
+	/*———————————————————————————*/
+	/* PANELS: FULL-WIDTH & FLOW  */
+	/*———————————————————————————*/
+	#LeftPanel,
+	#RightPanel {
+		position: static !important;
+		display: block !important;
+		width: 100% !important;
+		min-width: 0 !important;
+		max-width: none !important;
+		height: auto !important;
+		max-height: none !important;
+		overflow: visible !important;
+		margin: 0 !important;
+		padding: 2vh 4vw !important;
+		top: auto !important;
+		right: auto !important;
+		bottom: auto !important;
+		left: auto !important;
+		transform: none !important;
+		box-sizing: border-box !important;
+	}
+
+	/*———————————————————————————*/
+	/* PANEL ORDER                  */
+	/*———————————————————————————*/
+	#LeftPanel {
+		order: -1 !important;
+		z-index: 10 !important;
+		border-bottom-left-radius: 1rem !important;
+		border-bottom-right-radius: 1rem !important;
+		background-color: inherit !important;
+	}
+	#RightPanel {
+		order: 0 !important;
+		z-index: 1 !important;
+	}
+
+	/*———————————————————————————*/
+	/* HIDE DESKTOP-ONLY ELEMENTS   */
+	/*———————————————————————————*/
+	#Canvas3D,
+	#MouseGlow {
+		display: none !important;
+	}
+	#MainButton {
+		/* “Interactive Portfolio” */
+		display: none !important;
+	}
+
+	/*———————————————————————————*/
+	/* NAVIGATION: HORIZONTAL BAR   */
+	/*———————————————————————————*/
+	.NavContainer {
+		position: static !important;
+		transform: none !important;
+		display: flex !important;
+		flex-direction: row !important;
+		justify-content: center !important;
+		gap: 1.5vh !important;
+		margin: 2vh auto 0 !important;
+	}
+	.NavItem {
+		margin: 0 1vw !important;
+	}
+
+	/*———————————————————————————*/
+	/* SOCIAL ICONS: CENTERED BELOW */
+	/*———————————————————————————*/
+	#SocialsContainer {
+		position: static !important;
+		transform: none !important;
+		display: flex !important;
+		justify-content: center !important;
+		gap: 4vw !important;
+		margin: 2vh auto 0 !important;
+	}
+
+	/*———————————————————————————*/
+	/* CONTENT SECTIONS: FULL WIDTH */
+	/*———————————————————————————*/
+	.Section {
+		width: 100% !important;
+		height: auto !important;
+		max-height: none !important;
+		overflow: visible !important;
+		padding-top: 4vh !important;
+		box-sizing: border-box !important;
+	}
+
+	/*———————————————————————————*/
+	/* GLOBAL SCROLL & BACKGROUND   */
+	/*———————————————————————————*/
+	html,
+	body,
+	#root {
+		margin: 0 !important;
+		padding: 0 !important;
+		width: 100% !important;
+		background-color: #111 !important;
+		overflow-x: hidden !important;
+		overflow-y: auto !important;
+	}
+}

@@ -1,3 +1,6 @@
+html {
+	scroll-behavior: smooth;
+}
 body {
 	margin: 0;
 	height: 100%;
@@ -158,6 +161,7 @@ m {
 	font-size: 1.6vh;
 	color: gray;
 	transition: color 0.3s ease;
+	text-decoration: none;
 }
 
 .NavItem.Active .NavItemDot {
@@ -172,7 +176,6 @@ m {
 .Section {
 	margin-bottom: 10vh;
 }
-
 #SocialsContainer {
 	position: absolute;
 	top: 80vh;
