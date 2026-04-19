@@ -181,9 +181,25 @@ const FileSystem = {
 						content:
 							"Below are some of the projects I have developed over\nmy 5+ years of coding. This is just a small selection\nof the many projects I've worked on, with several\nothers not making the list. Please note that some of\nthese projects are unfinished—either because I lacked\nthe necessary skills at the time or simply moved on to\nmore interesting challenges. However, rest assured I\nplan to revisit and polish these projects in the future\nimproving their code with my current level of expertise.",
 					},
+					"horizon.lnk": {
+						type: "link",
+						content: "https://horizon.adamzborovsky.com",
+					},
+					"pricelock.lnk": {
+						type: "link",
+						content: "https://pricelock.adamzborovsky.com",
+					},
+					"macrolens.lnk": {
+						type: "link",
+						content: "https://macrolens.adamzborovsky.com",
+					},
 					"pland.lnk": {
 						type: "link",
 						content: "https://github.com/Adam-Zborovsky/PlanD",
+					},
+					"megabead.lnk": {
+						type: "link",
+						content: "https://github.com/Adam-Zborovsky/MegaBead",
 					},
 					"sudoku.lnk": {
 						type: "link",
@@ -197,7 +213,7 @@ const FileSystem = {
 						type: "link",
 						content: "https://github.com/Adam-Zborovsky/Tic-Tac-Toe",
 					},
-					"pock_paper_scissors.lnk": {
+					"rock_paper_scissors.lnk": {
 						type: "link",
 						content: "https://github.com/Adam-Zborovsky/Rock-Paper-Scissors",
 					},
@@ -216,12 +232,12 @@ const FileSystem = {
 			"about.txt": {
 				type: "file",
 				content:
-					"I'm a software and web developer with a passion\nfor exploring the vast possibilities of programming.\nI've been coding since I was 15, starting with small\ngames in Python and evolving into a diverse range of\nprojects. Over the years, I've delved into web development,\nandroid app development, cybersecurity, and graphics\nprogramming. My experience spans from creating a virtual\ncloset app and many 2d Python games to developing locally\nrun servers for smart home devices and full stack web\napplications. I'm driven by a love for technology and\na desire to learn, create, and solve complex problems.\nI'm proficient in Python, React, JavaScript, C#, Kotlin,\nHTML&CSS, Node.js, All Database Types and Docker,\nwith Python being my strongest language.",
+					"I'm a full-stack and mobile developer with a passion\nfor exploring the vast possibilities of programming.\nI've been coding since I was 15, starting with small\ngames in Python and evolving into a diverse range of\nprojects. Over the years, I've delved into web\ndevelopment, mobile development, AI integration, and\ngraphics programming. My experience spans from building\nfull-stack web applications and cross-platform Flutter\napps to integrating AI vision models and architecting\nRedis-backed scraping pipelines. I'm driven by a love\nfor technology and a desire to learn, create, and solve\ncomplex problems. I'm proficient in JavaScript,\nTypeScript, Flutter, Dart, React, Next.js, Node.js,\nPython, MongoDB, Redis, and Docker.",
 			},
 			"experience.txt": {
 				type: "file",
 				content:
-					"Error 404 not found. That's right I have no\nprofessional in industry experience, however I still\nbring over 5 years of hands-on experience in coding\nand web development from personal projects self-driven\nlearning and professional courses. I've tackled a wide\nrange of challenges, from developing AI-powered virtual\nclosets and web apps for scheduling to creating custom\nand efficient smart home functions. My projects have\nallowed me to build strong skills in Python, Kotlin,\nJavaScript, and C#, and I've gained a solid foundation\nin problem-solving, collaboration, and adaptability.\nI'm eager to apply my knowledge and passion for\ntechnology in a professional setting, where I can\ncontinue to learn and grow as a web developer.",
+					"Error 404 not found. That's right I have no\nprofessional in industry experience, however I still\nbring over 5 years of hands-on experience in coding\nand web development from personal projects self-driven\nlearning and professional courses. My recent work\nincludes an AI-driven market intelligence platform\nwith scheduled briefing pipelines, a cross-platform\nprice intelligence app with Redis-backed multi-provider\nscraping, and a computer-vision nutrition tracker\nbuilt on Google Gemini. My projects have allowed me\nto build strong skills in JavaScript, TypeScript,\nFlutter, Node.js, and Python, and I've gained a solid\nfoundation in problem-solving, collaboration, and\nadaptability. I'm eager to apply my knowledge and\npassion for technology in a professional setting,\nwhere I can continue to learn and grow as a developer.",
 			},
 			"resume.pdf": {
 				type: "file",
