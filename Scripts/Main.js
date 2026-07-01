@@ -769,9 +769,16 @@ Projects.forEach((Project) => {
 		event.target.querySelectorAll("p").forEach((Text) => {
 			let Iteration = 0;
 
+			// Pin the current box size for the duration of the scramble.
+			// Random glyphs have different widths in a proportional font,
+			// so without this the text re-wraps to a different line count
+			// each frame and the whole row jumps up and down.
+			Text.style.height = Text.offsetHeight + "px";
+			Text.style.overflow = "hidden";
+
 			let Interval = setInterval(() => {
-				// Split text into its letters
-				Text.innerText = Text.innerText
+				// Build from the canonical value so the length is always exact
+				Text.innerText = Text.dataset.value
 					.split("")
 
 					// Assign each letter a new value
@@ -788,6 +795,10 @@ Projects.forEach((Project) => {
 
 				if (Iteration >= Text.dataset.value.length) {
 					clearInterval(Interval);
+
+					// Text is back to normal — release the pinned box
+					Text.style.height = "";
+					Text.style.overflow = "";
 				}
 
 				Iteration += 1;

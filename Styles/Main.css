@@ -210,11 +210,6 @@ m {
 }
 .Project:hover p {
 	user-select: none;
-	font-size: 1.4vh;
-	color: gray;
-	white-space: nowrap;
-	overflow: hidden;
-	text-overflow: ellipsis;
 }
 .Project .title {
 	color: white;
