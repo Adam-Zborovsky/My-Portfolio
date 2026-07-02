@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adam Zborovsky — Full Stack Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800&family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0d9488;
+    --teal-dark:#0f766e;
+    --teal-light:#cceae7;
+    --divider:#e8e6e1;
+    --ink:#1c1c1e;
+    --body-dark:#3e3e42;
+    --body-light:#6e6e73;
+
+    --font-display:'Playfair Display', Georgia, serif;
+    --font-sans:'DM Sans', Arial, sans-serif;
+    --font-serif:'Source Serif 4', Georgia, serif;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ background:#e9e7e2; }
+
+  body{
+    margin:0;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .page{
+    width:594.96pt;
+    max-width:100%;
+    min-height:841.92pt;
+    margin:24px auto;
+    background:#ffffff;
+    padding:19pt 53pt 24pt 53pt;
+    box-shadow:0 2px 24px rgba(0,0,0,0.10);
+  }
+
+  /* ---------- Header ---------- */
+
+  .accent-tick{
+    width:32.25pt;
+    height:1.5pt;
+    background:var(--teal);
+    margin-bottom:13pt;
+  }
+
+  .eyebrow{
+    margin:0;
+    font-family:var(--font-sans);
+    font-weight:600;
+    font-size:6.56pt;
+    line-height:1.3;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:var(--teal);
+  }
+
+  h1.name{
+    margin:7pt 0 0 0;
+    font-family:var(--font-display);
+    font-weight:800;
+    font-size:24.38pt;
+    line-height:1.05;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+
+  p.contact{
+    margin:9pt 0 0 0;
+    font-family:var(--font-sans);
+    font-weight:400;
+    font-size:7.31pt;
+    color:var(--body-dark);
+  }
+  p.contact a{
+    color:var(--body-dark);
+    text-decoration:none;
+  }
+  p.contact a:hover{ text-decoration:underline; }
+  p.contact .dot{
+    color:var(--teal-light);
+    margin:0 4pt;
+  }
+
+  p.location{
+    margin:5pt 0 0 0;
+    font-family:var(--font-sans);
+    font-weight:400;
+    font-size:7.03pt;
+    color:var(--body-light);
+  }
+
+  /* ---------- Intro grid: summary + skills ---------- */
+
+  .intro-grid{
+    margin-top:20pt;
+    display:grid;
+    grid-template-columns: 227pt 1fr;
+    column-gap:32.6pt;
+    align-items:start;
+  }
+
+  .summary p{
+    margin:0;
+    font-family:var(--font-serif);
+    font-weight:400;
+    font-size:8.25pt;
+    line-height:1.55;
+    color:var(--body-dark);
+  }
+
+  .skills{
+    display:flex;
+    flex-direction:column;
+  }
+
+  .skill-row{
+    margin-bottom:7pt;
+  }
+  .skill-row:last-of-type{ margin-bottom:0; }
+
+  .skill-label{
+    display:block;
+    font-family:var(--font-sans);
+    font-weight:600;
+    font-size:5.81pt;
+    letter-spacing:0.13em;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:5pt;
+  }
+
+  .skill-list{
+    display:block;
+    font-family:var(--font-sans);
+    font-weight:400;
+    font-size:6.84pt;
+    line-height:1.35;
+    color:var(--body-dark);
+  }
+
+  .languages{
+    margin-top:4pt;
+    font-family:var(--font-sans);
+    font-size:6.84pt;
+    color:var(--body-dark);
+  }
+  .languages span{ margin-right:12pt; }
+  .languages span:last-child{ margin-right:0; }
+  .languages strong{
+    font-weight:600;
+    color:var(--ink);
+  }
+
+  /* ---------- Dividers ---------- */
+
+  .divider{
+    border:none;
+    height:0.75pt;
+    background:var(--divider);
+    margin:14pt 0 18pt 0;
+  }
+
+  /* ---------- Education ---------- */
+
+  .edu-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12pt;
+  }
+  .edu-header h2{
+    margin:0;
+    font-family:var(--font-sans);
+    font-weight:600;
+    font-size:8.44pt;
+    color:var(--ink);
+  }
+  .edu-date{
+    font-family:var(--font-sans);
+    font-weight:500;
+    font-size:6.56pt;
+    color:var(--body-light);
+    white-space:nowrap;
+  }
+
+  p.edu-desc{
+    margin:6pt 0 0 0;
+    font-family:var(--font-serif);
+    font-weight:400;
+    font-size:7.69pt;
+    line-height:1.55;
+    color:var(--body-light);
+  }
+
+  /* ---------- Projects ---------- */
+
+  .section-heading{
+    display:flex;
+    align-items:center;
+    gap:8pt;
+    margin-bottom:10pt;
+  }
+  .section-heading span{
+    font-family:var(--font-sans);
+    font-weight:700;
+    font-size:5.81pt;
+    letter-spacing:0.13em;
+    text-transform:uppercase;
+    color:var(--teal-dark);
+    white-space:nowrap;
+  }
+  .section-heading .rule{
+    flex:1 1 auto;
+    height:0.75pt;
+    background:var(--divider);
+  }
+
+  .project{
+    border-left:1.5pt solid var(--teal-light);
+    padding-left:8.65pt;
+    margin-bottom:13pt;
+  }
+  .project:last-child{ margin-bottom:0; }
+
+  .project-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    gap:12pt;
+  }
+  .project-header h3{
+    margin:0;
+    font-family:var(--font-sans);
+    font-weight:700;
+    font-size:8.62pt;
+    color:var(--ink);
+  }
+  .project-year{
+    font-family:var(--font-sans);
+    font-weight:500;
+    font-size:6.38pt;
+    color:var(--body-light);
+    white-space:nowrap;
+  }
+
+  a.project-link{
+    display:inline-block;
+    margin-top:7pt;
+    font-family:var(--font-sans);
+    font-weight:500;
+    font-size:6.56pt;
+    color:var(--ink);
+    text-decoration:none;
+  }
+  a.project-link:hover{ text-decoration:underline; }
+
+  p.project-desc{
+    margin:7pt 0 0 0;
+    font-family:var(--font-serif);
+    font-weight:400;
+    font-size:7.69pt;
+    line-height:1.52;
+    color:var(--body-dark);
+  }
+
+  .tags{
+    margin-top:6pt;
+    display:flex;
+    flex-wrap:wrap;
+    row-gap:3pt;
+    column-gap:6pt;
+  }
+  .tags span{
+    font-family:var(--font-sans);
+    font-weight:600;
+    font-size:6.19pt;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--teal);
+    white-space:nowrap;
+  }
+
+  /* ---------- Print ---------- */
+
+  @page{
+    size:A4;
+    margin:0;
+  }
+  @media print{
+    html{ background:#fff; }
+    body{ margin:0; }
+    .page{
+      margin:0 auto;
+      box-shadow:none;
+      width:100%;
+      min-height:0;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="accent-tick"></div>
+    <p class="eyebrow">Full Stack Developer</p>
+    <h1 class="name">Adam Zborovsky</h1>
+    <p class="contact">
+      <a href="mailto:adamzborovsky@gmail.com" target="_blank">adamzborovsky@gmail.com</a>
+      <span class="dot">·</span>
+      <a href="https://adamzborovsky.com/" target="_blank">adamzborovsky.com</a>
+      <span class="dot">·</span>
+      <a href="https://github.com/Adam-Zborovsky" target="_blank">GitHub</a>
+      <span class="dot">·</span>
+      <a href="https://linkedin.com/in/adam-zborovsky" target="_blank">LinkedIn</a>
+    </p>
+    <p class="location">Ramat Gan, Israel</p>
+  </header>
+
+  <section class="intro-grid">
+    <div class="summary">
+      <p>Full-stack developer building production web, mobile, and AI-integrated applications. Shipped deployed apps with React, Next.js, Flutter, Node.js, and MongoDB—including JWT auth, REST APIs, Redis queues, Docker, and LLM integrations. Seeking a junior developer role to contribute immediately and grow.</p>
+    </div>
+
+    <div class="skills">
+      <div class="skill-row">
+        <span class="skill-label">Frontend</span>
+        <span class="skill-list">JavaScript, TypeScript, React, Next.js, React Native, HTML/CSS, Tailwind</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">Mobile</span>
+        <span class="skill-list">React Native, Expo, Flutter, Dart, Riverpod, GoRouter</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">Backend</span>
+        <span class="skill-list">Node.js, Express.js, Fastify, Python, REST APIs, JWT, NextAuth</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">Databases</span>
+        <span class="skill-list">PostgreSQL, Prisma ORM, SQLite, MongoDB, Redis, Firebase</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-label">Devops &amp; Tools</span>
+        <span class="skill-list">Docker, Docker Compose, Git, Postman, Gemini API</span>
+      </div>
+
+      <div class="languages">
+        <span><strong>Hebrew</strong> Native</span>
+        <span><strong>English</strong> Fluent</span>
+        <span><strong>Russian</strong> Fluent</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <section class="education">
+    <div class="edu-header">
+      <h2>Full Stack Development — HackerU</h2>
+      <span class="edu-date">2025 · 535 hours</span>
+    </div>
+    <p class="edu-desc">8-month intensive program covering JavaScript, React, Node.js, MongoDB, REST API design, and deployment.</p>
+  </section>
+
+  <hr class="divider">
+
+  <section class="projects">
+    <div class="section-heading">
+      <span>Projects</span>
+      <div class="rule"></div>
+    </div>
+
+    <article class="project">
+      <div class="project-header">
+        <h3>VAM Store</h3>
+        <span class="project-year">2026</span>
+      </div>
+      <a class="project-link" href="https://vam.co.il" target="_blank">vam.co.il</a>
+      <p class="project-desc">Hebrew-first accessibility e-commerce built to IS&nbsp;5568 / WCAG&nbsp;2.2&nbsp;AA standards. Prisma-powered checkout with 15-minute stock holds on a 19-model Postgres schema. Admin panel with order management, lead tracking, revenue charts, and CSV export. Full RTL layout with bilingual Hebrew/English and custom accessibility toolbar.</p>
+      <div class="tags">
+        <span>Next.js 16</span>
+        <span>TypeScript</span>
+        <span>PostgreSQL</span>
+        <span>Prisma</span>
+        <span>NextAuth</span>
+        <span>Tailwind V4</span>
+        <span>Docker</span>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-header">
+        <h3>Layover</h3>
+        <span class="project-year">2026</span>
+      </div>
+      <a class="project-link" href="https://github.com/Adam-Zborovsky/Layover" target="_blank">github.com/Adam-Zborovsky/Layover</a>
+      <p class="project-desc">AI-powered receipt scanner — snap a photo and Gemini Vision extracts merchant, date, amounts, line items, and category using constrained JSON output. Offline-first React Native app with local SQLite queue for no-signal capture. Cost-aware model escalation (Flash&nbsp;→&nbsp;Pro). Export to ZIP, PDF, or CSV for reimbursement. Self-hosted with Docker Compose.</p>
+      <div class="tags">
+        <span>React Native</span>
+        <span>Expo</span>
+        <span>TypeScript</span>
+        <span>Fastify</span>
+        <span>Gemini Vision</span>
+        <span>Prisma</span>
+        <span>Docker</span>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-header">
+        <h3>Horizon</h3>
+        <span class="project-year">2026</span>
+      </div>
+      <a class="project-link" href="https://horizon.adamzborovsky.com/" target="_blank">horizon.adamzborovsky.com</a>
+      <p class="project-desc">AI-driven trading brief generator — distills news, geopolitical events, and market data into daily intelligence. Flutter mobile app with Riverpod state management and GoRouter navigation. Scheduled node-cron briefing jobs persisted to MongoDB. 16 REST endpoints secured with JWT auth and bcrypt hashing. Docker Compose for single-VPS deployment.</p>
+      <div class="tags">
+        <span>Flutter</span>
+        <span>Riverpod</span>
+        <span>Node.js</span>
+        <span>Express</span>
+        <span>MongoDB</span>
+        <span>Node-cron</span>
+        <span>Docker</span>
+      </div>
+    </article>
+
+    <article class="project">
+      <div class="project-header">
+        <h3>Glow</h3>
+        <span class="project-year">2026</span>
+      </div>
+      <a class="project-link" href="https://glow.adamzborovsky.com/" target="_blank">glow.adamzborovsky.com</a>
+      <p class="project-desc">Personal page builder with drag-and-drop block editor, 16+ content blocks, and live phone preview. 20+ themeable templates with full color, font, and layout customization. Built-in analytics for page views, link clicks, and visitor geography. SSG-published pages at glow.page/username with sub-second load times.</p>
+      <div class="tags">
+        <span>Next.js 16</span>
+        <span>TypeScript</span>
+        <span>PostgreSQL</span>
+        <span>Prisma</span>
+        <span>NextAuth V5</span>
+        <span>Tailwind V4</span>
+      </div>
+    </article>
+
+  </section>
+
+</div>
+</body>
+</html>
